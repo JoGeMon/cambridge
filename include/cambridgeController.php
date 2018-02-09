@@ -30,6 +30,17 @@ function explotaApi(){
 	return $def;
 }
 
+/**
+ * Método para llamar a la función 
+ *
+ * @return void
+ * @author 
+ **/
+function ()
+{
+}
+
+
 
 /**
  * Método que setea y realiza el llamado a la api
