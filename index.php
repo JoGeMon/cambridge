@@ -30,97 +30,63 @@
 							</div>	
 							<div class="col-md-6">
 								<p>Search on the fly</p>
-								<p id="onTheFly" data-toggle="popover" data-placement="top" data-content=""><i>Roses are red, violets are blue</i></p>
+								<p id="onTheFly" data-toggle="popover" data-placement="bottom"><i>Roses are red, violets are blue</i></p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<?php 
-			if(!empty($_POST)){
-				$resultados = explotaApi();
-				if(!empty($resultados[0]['busqueda'])){
+				if(!empty($_POST)){
+					$resultados = explotaApi();
+					if(!empty($resultados[0]['busqueda'])){
 			?>	
-					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#entradas">Entradas</a></li>
-						<li><a data-toggle="tab" href="#definiciones">Definición</a></li>
-						<li><a data-toggle="tab" href="#otros">Otro</a></li>
-					</ul>
-					<div class="tab-content">
 						<div class="tab-pane active" id="entradas">
 							<?php foreach($resultados as $resultado){ ?>
 								<div class="row">
 									<div class="col-md-12">
-										<h4><?php print_r($resultado['busqueda'])?></h4>
-										<p><?php print_r($resultado['definiciones'])?></p>
-										<?php foreach($resultado['pronunciaciones'] as $tag => $pronuncia ){ ?>
-												
-											<p>
-											<?php echo $tag;?>
-											<audio controls class="playback">
-												<source src="<?php echo $pronuncia ?>" type="audio/mp3">
-												Tu navegador no soporta el elemento audio
-											</audio>
-											</p>
-										<?php } ?>
+										<div class="panel panel-default">
+											<div class="panel-body">
+												<h4><?php print_r($resultado['busqueda'])?></h4>
+												<p><?php print_r($resultado['definiciones'])?></p>
+												<?php foreach($resultado['pronunciaciones'] as $tag => $pronuncia ){ ?>
+													<p>
+													<?php echo $tag;?>
+													<audio controls class="playback">
+														<source src="<?php echo $pronuncia ?>" type="audio/mp3">
+														Tu navegador no soporta el elemento audio
+													</audio>
+													</p>
+												<?php } ?>
+											</div>
+										</div>
 									</div>
 								</div>
-								<hr>
 							<?php }	?> 
 						</div>
-						<div class="tab-pane" id="definiciones">
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Definición</h4>
-									<p>Definición</p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Definición</h4>
-									<p>Definición</p>
-								</div>
-							</div>
-						</div>
-						<div class="tab-pane" id="otros">
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Otros</h4>
-									<p>Definición</p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Otros</h4>
-									<p>Definición</p>
-								</div>
-							</div>
-						</div>
-					</div>
-			<?php 	}elseif(!empty($resultados[0]['mean'])){ ?>
-				<div class="alert alert-warning">
-			 		<p class="text-center">No hay resultados.</p>
-					<p>Quizá quisiste buscar uno de los siguientes términos</p>
-					<br/>
-			 		<ul>
-
-			 			<?php foreach($resultados[0]['mean'] as $resultado){ ?>
-			 				<li><?php print_r($resultado); ?></li>
-			 			<?php } ?>
-			 		</ul>
-			 	</div>
-			<?php }else{ ?>
-				<div class="alert alert-danger text-center">
-			 		<p>No hay resultados</p>
-			 	</div>
-			<?php } 
+					<?php }elseif(!empty($resultados[0]['mean'])){ ?>
+						<div class="alert alert-warning">
+					 		<p class="text-center">No hay resultados.</p>
+							<p>Quizá quisiste buscar uno de los siguientes términos</p>
+							<br/>
+					 		<ul>
+					 			<?php foreach($resultados[0]['mean'] as $resultado){ ?>
+					 				<li><?php print_r($resultado); ?></li>
+					 			<?php } ?>
+					 		</ul>
+					 	</div>
+					<?php }else{ ?>
+						<div class="alert alert-danger text-center">
+					 		<p>No hay resultados</p>
+					 	</div>
+				<?php } 
 			}else{
 				echo "no estoy en post";
 			}?>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#onTheFly').mouseup(function(event){
+			$('#onTheFly').dblclick(function(event){
 				document.captureEvents(Event.MOUSEUP);
 				var seleccion = window.getSelection().toString();
 				$.ajax({
