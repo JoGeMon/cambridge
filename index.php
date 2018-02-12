@@ -1,4 +1,4 @@
-<?php include('include/cambridgeController.php'); ?>
+	<?php include('include/cambridgeController.php'); ?>
 <html lang="es-Es">
 	<head>
 	    <meta charset="utf-8">
@@ -123,9 +123,25 @@
 			$('#onTheFly').mouseup(function(event){
 				document.captureEvents(Event.MOUSEUP);
 				var seleccion = window.getSelection().toString();
-				console.log(document.selection.createRange().text);
-				$('#onTheFly').popover({
-					content: seleccion,
+				$.ajax({
+					type: 'POST',
+					url: 'include/cambridgeSfController.php',
+					dataType :  'json',
+					data: {palabras: seleccion},
+				}).done(function(data){
+					seleccion2 = data;
+					console.log(data);
+					console.log(seleccion2);
+					$('#onTheFly').popover('destroy');
+					$('#onTheFly').popover({
+						html: true,
+						content: seleccion2,
+						cache: false,
+					})
+				}).fail(function(xhr, status, error){
+					var err = eval("(" + xhr.responseText + ")");
+  					console.log(err.Message);
+					console.log('no pasó');
 				});
 			});
 		});

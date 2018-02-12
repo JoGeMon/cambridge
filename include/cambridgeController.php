@@ -31,13 +31,16 @@ function explotaApi(){
 }
 
 /**
- * Método para llamar a la función 
+ * Método para llamar a la función search first para el popover de la búsqueda on de fly
  *
- * @return void
- * @author 
+ * @return Respuesta de la api
+ * @author Jorge Velarde
+ * @version 1.0 - 11/02/2018
  **/
-function ()
+function searchFirst($palabras)
 {
+	$busqueda = setUri('dictionaries/learner-english/search/first/?q='.$palabras);
+	return $busqueda;
 }
 
 
